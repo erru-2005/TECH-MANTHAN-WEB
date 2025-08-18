@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Registration</title>
+    <style>
+        body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial; background:#0b0d16; color:#e6e8ef; }
+        .wrap { min-height: 100dvh; display:flex; align-items:center; justify-content:center; padding: 40px 16px; }
+        .card { background:#121428; border-radius:16px; padding:28px; max-width:520px; width:100%; box-shadow: 0 16px 48px rgba(0,0,0,.45); }
+        .card h1 { margin:0 0 10px; font-size: clamp(22px, 4vw, 30px); }
+        .card p { margin:0 0 18px; opacity:.85; }
+        .btn { display:inline-block; margin-top: 6px; background:#1f6ffe; color:white; text-decoration:none; padding:12px 18px; border-radius:10px; }
+    </style>
+    <link rel="preload" as="image" href="{{ url_for('static', filename='WhatsApp Image 2025-08-18 at 22.23.03_7670bb01.jpg') }}">
+</head>
+<body>
+    <div class="wrap">
+        <div class="card">
+            <h1>Registration Coming Soon</h1>
+            <p>The registration form will be available shortly. For now, you can go back to the event page.</p>
+            <a class="btn" href="{{ url_for('main.event') }}">Back to Event</a>
+        </div>
+    </div>
+</body>
+</html>
+
+
