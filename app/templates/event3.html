@@ -10,6 +10,10 @@
             padding: 0;
             box-sizing: border-box;
         }
+        .registration-button{
+        text-decoration: none;
+        display: inline-block;
+    }   
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -293,6 +297,13 @@
             line-height: 1.6;
         }
 
+        /* Event Info cards */
+        .event-info { margin: 24px 0; }
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .info-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 18px; }
+        .info-card ul { list-style: none; padding-left: 0; }
+        .info-card li { margin: 8px 0; }
+
         /* Registration Section */
         .registration-section {
             text-align: center;
@@ -348,6 +359,7 @@
             .content-grid {
                 grid-template-columns: 1fr;
             }
+            .info-grid { grid-template-columns: 1fr; }
             
             .event-title {
                 font-size: 2.5rem;
@@ -431,14 +443,30 @@
             
         </section>
 
+        <section class="event-info" aria-label="Event Information">
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3 class="section-title">Overview</h3>
+                    <ul class="rules-list">
+                        <li>Event: Treasure Hunt</li>
+                        <li>Class: III BCA B</li>
+                        <li>Team: Sanvi & Rashmitha</li>
+                        <li>Venue: Campus Grounds</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3 class="section-title">Coordinators</h3>
+                    <ul class="rules-list">
+                        <li>Faculty: Mrs. Vijayashree, Mrs. Wilma</li>
+                        <li>Contact: +91 90000 00000</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
         <div class="registration-section">
             <h2 class="registration-title">Ready to Code?</h2>
-            <button class="registration-button" onclick="registerForEvent()">REGISTER NOW</button>
-            <div class="contact-info">
-                <p><strong>For more details contact:</strong> Rajath</p>
-                <p><strong>Phone:</strong> 935342599</p>
-                <p><strong>Class:</strong> III BCA</p>
-            </div>
+            <a class="registration-button" href="https://docs.google.com/forms/d/e/1FAIpQLSey_Sn1JnHwxAUWZsjmVLa7wNkaLEewsWtGhK-L8rDF2KHhXg/viewform?usp=dialog" class="registration-button" onclick="registerForEvent()">REGISTER NOW</a>
         </div>
     </div>
 

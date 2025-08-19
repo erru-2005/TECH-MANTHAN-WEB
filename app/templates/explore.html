@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Explore • TECH MANTHAN 5.0</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Arial, sans-serif; color: #eaf8ff; background: linear-gradient(120deg,#0a0f1f,#111c3a,#0c2b2e); min-height: 100vh; display: flex; flex-direction: column; }
+    header { position: sticky; top: 0; background: rgba(3,8,20,.55); backdrop-filter: blur(6px); border-bottom: 1px solid rgba(255,255,255,.08); padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; }
+    .brand { font-weight: 800; }
+    nav a { color: #e9f9ff; text-decoration: none; margin-left: 14px; font-weight: 700; font-size: 14px; }
+    main { width: 100%; max-width: 960px; margin: 20px auto; padding: 0 16px; }
+
+    .video-card { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 14px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+    .video-wrap { position: relative; }
+    video { width: 100%; height: auto; display: block; background: #000; }
+    .badge { position: absolute; top: 10px; left: 10px; background: linear-gradient(90deg,#00ffc6,#008cff); color: #001327; font-weight: 900; padding: 6px 10px; border-radius: 999px; font-size: 12px; }
+    figcaption { padding: 12px 14px; display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+    .caption { font-weight: 800; }
+    .meta { opacity: .9; font-size: 13px; }
+
+    footer { margin-top: auto; padding: 16px; text-align: center; opacity: .85; border-top: 1px solid rgba(255,255,255,.08); background: rgba(0,0,0,.15); }
+
+    @media (max-width: 768px) {
+      figcaption { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+  <body>
+    <header>
+      <div class="brand">TECH MANTHAN 5.0</div>
+      <nav>
+        <a href="{{ url_for('main.index') }}">Home</a>
+       
+        <a href="{{ url_for('main.about') }}">About</a>
+      </nav>
+    </header>
+
+    <main>
+      <h1 style="margin-bottom:12px;">Explore</h1>
+      <p style="opacity:.9; margin-bottom:14px;">TECH MANTHAN 5.0 (2025) - Promo Videos</p>
+
+      <figure class="video-card">
+        <div class="video-wrap">
+          <span class="badge">III BCA B</span>
+          <video controls poster="{{ url_for('static', filename='BATTLEGROUND.jpg') }}">
+            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <figcaption>
+          <div class="caption">Tech Manthan Highlights</div>
+          <div class="meta">Caption: Opening ceremony glimpse</div>
+        </figcaption>
+      </figure>
+    </main>
+
+    <footer>
+      © {{ 2025 }} TECH MANTHAN • Built with love 🤍 and gradients of Innovation
+    </footer>
+  </body>
+</html>
+
+
