@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TECH-MANTHAN 3D Showcase</title>
+    <style>
+        :root {
+            --accent: #00e5ff;
+            --accent-2: #7c4dff;
+            --surface: #060812;
+            --glass: rgba(255,255,255,.06);
+        }
+
+        html, body { height: 100%; margin: 0; }
+        body {
+            background: #000;
+            color: #e6e8ef;
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .stage {
+            position: relative;
+            min-height: 100%;
+            display: grid;
+            place-items: center;
+            padding: 18px;
+            background: radial-gradient(120% 120% at 50% 10%, rgba(0,229,255,.12), transparent 50%),
+                        radial-gradient(100% 100% at 80% 90%, rgba(124,77,255,.12), transparent 50%),
+                        #02040a;
+            overflow: hidden;
+        }
+
+        /* Second image as immersive background */
+        .bg {
+            position: absolute; inset: 0; z-index: 0;
+            background-image: url('{{ url_for('static', filename='BATTLEGROUND.jpg') }}');
+            background-size: cover; background-position: center;
+            filter: brightness(.65) saturate(1.15) blur(0px);
+            transform: scale(1.02);
+        }
+
+        .poster-3d {
+            position: relative; z-index: 1;
+            width: min(920px, 94vw);
+            perspective: 1400px; /* container perspective */
+        }
+
+        .card {
+            position: relative;
+            border-radius: 18px;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            transition: transform .18s ease, box-shadow .18s ease;
+            box-shadow: 0 30px 80px rgba(0,0,0,.55);
+            will-change: transform;
+        }
+
+        .card img {
+            display: block; width: 100%; height: auto; vertical-align: middle;
+        }
+
+        /* Glow rim and inner shine */
+        .card::before {
+            content: ""; position: absolute; inset: -1px; border-radius: 20px; pointer-events: none;
+            background: linear-gradient(135deg, rgba(0,229,255,.55), rgba(124,77,255,.55));
+            filter: blur(18px); opacity: .35; transform: translateZ(-30px) scale(.98);
+        }
+
+        .cta-wrap { position: absolute; left: 0; right: 0; bottom: max(14px, env(safe-area-inset-bottom)); display:flex; justify-content:center; padding: 0 16px; pointer-events: none; }
+        .cta-3d {
+            pointer-events:auto; position: relative; display:inline-flex; align-items:center; justify-content:center; gap:10px;
+            padding: 14px 26px; width: clamp(200px, 70vw, 420px);
+            border-radius: 14px; color:#0a0a12; text-decoration:none; font-weight: 800; letter-spacing:.4px; text-transform: uppercase;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            box-shadow: 0 14px 24px rgba(0,229,255,.2), 0 6px 12px rgba(124,77,255,.25), 0 2px 0 rgba(255,255,255,.4) inset, 0 -2px 0 rgba(0,0,0,.25) inset;
+            transform-style: preserve-3d; transform: translateZ(60px);
+            transition: transform .18s cubic-bezier(.2,.8,.2,1), box-shadow .18s ease;
+        }
+        .cta-3d::after { content:""; position:absolute; left:0; right:0; bottom:-10px; height:14px; border-radius:18px; filter: blur(10px); background: linear-gradient(90deg, rgba(0,229,255,.45), rgba(124,77,255,.45)); opacity:.85; transform: translateZ(-16px) scale(.92); }
+        .cta-3d:active { transform: translateZ(50px) translateY(2px); }
+
+        /* Mobile spacing if needed when card is close to edges */
+        .safe-pad { padding-bottom: 24px; }
+    </style>
+    <link rel="preload" as="image" href="{{ url_for('static', filename='WhatsApp Image 2025-08-18 at 22.23.03_7670bb01.jpg') }}">
+    <link rel="preload" as="image" href="{{ url_for('static', filename='BATTLEGROUND.jpg') }}">
+</head>
+<body>
+    <div class="stage">
+        <div class="bg" aria-hidden="true"></div>
+
+        <section class="poster-3d safe-pad" aria-label="Tech-Manthan Poster on Futuristic Background">
+            <div class="card" id="posterCard">
+                <!-- First image (poster) embedded as content layer on top of second image background -->
+                <img src="{{ url_for('static', filename='WhatsApp Image 2025-08-18 at 22.23.03_7670bb01.jpg') }}" alt="Tech-Manthan 3.0 CODEX poster">
+
+                <div class="cta-wrap">
+                    <a class="cta-3d" href="{{ url_for('main.register') }}">Register Now</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // 3D tilt/parallax that works on mouse and touch
+        (function() {
+            var card = document.getElementById('posterCard');
+            var container = card.parentElement;
+
+            function applyTilt(xRatio, yRatio) {
+                var rotateY = (xRatio - 0.5) * 16; // left/right
+                var rotateX = (0.5 - yRatio) * 10; // up/down
+                card.style.transform = 'rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg)';
+            }
+
+            container.addEventListener('mousemove', function(e) {
+                var rect = container.getBoundingClientRect();
+                var x = (e.clientX - rect.left) / rect.width;
+                var y = (e.clientY - rect.top) / rect.height;
+                applyTilt(x, y);
+            });
+
+            container.addEventListener('mouseleave', function() {
+                card.style.transform = 'rotateX(0) rotateY(0)';
+            });
+
+            // Touch support
+            container.addEventListener('touchmove', function(e) {
+                if (!e.touches || !e.touches[0]) return;
+                var rect = container.getBoundingClientRect();
+                var touch = e.touches[0];
+                var x = (touch.clientX - rect.left) / rect.width;
+                var y = (touch.clientY - rect.top) / rect.height;
+                applyTilt(x, y);
+            }, { passive: true });
+
+            container.addEventListener('touchend', function() {
+                card.style.transform = 'rotateX(0) rotateY(0)';
+            });
+        })();
+    </script>
+</body>
+</html>
+
