@@ -8,6 +8,10 @@ main = Blueprint('main', __name__)
 def index():
     return render_template('index.html')
 
+@main.route('/all_event')
+def All_Event():
+    return render_template('all_event.html')
+
 @main.route('/admin/home')
 def admin_home():
     return render_template('home.html')
@@ -22,9 +26,7 @@ def codex_event():
     return render_template('TECH recreate.html')
 
 # Lightweight registration landing so the CTA works
-@main.route('/register')
-def register():
-    return render_template('register.html')
+
 
 @main.route('/showcase/new')
 def showcase_new():
