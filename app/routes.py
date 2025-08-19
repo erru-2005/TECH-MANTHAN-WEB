@@ -8,20 +8,6 @@ main = Blueprint('main', __name__)
 def index():
     return render_template('index.html')
 
-@main.route('/explore')
-def explore():
-    return render_template('explore.html')
-
-@main.route('/about')
-def about():
-    return render_template('about.html')
-
-
-
-@main.route('/all_event')
-def All_Event():
-    return render_template('all_event.html')
-
 @main.route('/admin/home')
 def admin_home():
     return render_template('home.html')
@@ -36,7 +22,9 @@ def codex_event():
     return render_template('TECH recreate.html')
 
 # Lightweight registration landing so the CTA works
-
+@main.route('/register')
+def register():
+    return render_template('register.html')
 
 @main.route('/showcase/new')
 def showcase_new():
@@ -71,6 +59,7 @@ def showcase_new5():
 
 @main.route('/event6')
 def showcase_new6():
+    
     # Single-card version that replaces the first image with the second image and adds 3D + CTA
     return render_template('event6.html')
 
@@ -114,7 +103,21 @@ def showcase_new14():
     # Single-card version that replaces the first image with the second image and adds 3D + CTA
     return render_template('event14.html')
 
-@main.route('/treasure')
-def treasure():
-    # Fullscreen video with treasure box animation
-    return render_template('treasure.html')
+@main.route('/all_event')
+def all_event():
+    # Single-card version that replaces the first image with the second image and adds 3D + CTA
+    return render_template('all_event.html')
+
+# Gallery route
+@main.route('/gallary')
+def gallery():
+    return render_template('gallary.html')
+
+
+@main.route('/about')
+def about():
+    return render_template('about.html')
+
+@main.route('/explore')
+def explore():
+    return render_template('explore.html')

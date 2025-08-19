@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gallery</title>
+  <style>
+    :root {
+      --bg: #011a10;
+      --card: #022d18;
+      --accent: #00ff99;
+      --accent-2: #00ffcc;
+      --text: #ffffff;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1.8rem;
+      letter-spacing: 0.5px;
+    }
+
+    .subtext {
+      margin-top: 6px;
+      color: #b9ffe8;
+      font-size: 0.95rem;
+    }
+
+    .gallery {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px 24px 40px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 16px;
+    }
+
+    .item {
+      position: relative;
+      border: 2px solid var(--accent);
+      border-radius: 14px;
+      overflow: hidden;
+      background: var(--card);
+      box-shadow: 0 0 12px rgba(0, 255, 153, 0.35);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      cursor: zoom-in;
+      aspect-ratio: 4/3;
+    }
+
+    .item:hover {
+      transform: translateY(-4px) scale(1.01);
+      box-shadow: 0 0 24px rgba(0, 255, 153, 0.6);
+    }
+
+    .item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.35s ease, filter 0.35s ease;
+    }
+
+    .item::after {
+      content: "View";
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(180deg, rgba(0,0,0,0.0), rgba(0,0,0,0.55));
+      color: var(--text);
+      font-weight: bold;
+      letter-spacing: 0.5px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .item:hover img { transform: scale(1.06); filter: saturate(1.05); }
+    .item:hover::after { opacity: 1; }
+
+    /* Lightbox */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.8);
+      z-index: 1000;
+      padding: 20px;
+    }
+
+    .lightbox.open { display: flex; }
+
+    .lightbox-content {
+      position: relative;
+      max-width: 95vw;
+      max-height: 90vh;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 2px solid var(--accent-2);
+      background: #000;
+      box-shadow: 0 0 32px rgba(0, 255, 204, 0.45);
+      animation: pop 200ms ease-out;
+    }
+
+    @keyframes pop { from { transform: scale(0.96); opacity: 0.6; } to { transform: scale(1); opacity: 1; } }
+
+    .lightbox-img { display: block; width: 100%; height: 100%; object-fit: contain; background: #000; }
+
+    .close-btn {
+      position: absolute;
+      top: 10px; right: 10px;
+      background: rgba(0,0,0,0.55);
+      border: 1px solid var(--accent-2);
+      color: var(--text);
+      border-radius: 10px;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.2s ease, transform 0.15s ease;
+    }
+
+    .close-btn:hover { background: rgba(0,0,0,0.8); transform: scale(1.03); }
+
+    /* Mobile tweaks */
+    @media (max-width: 600px) {
+      header { padding: 16px; }
+      h1 { font-size: 1.4rem; }
+      .subtext { font-size: 0.9rem; }
+      .gallery { padding: 14px 14px 26px; gap: 12px; }
+      .item { border-radius: 12px; }
+    }
+  </style>
+  <script>
+    // Small helper to get all nodes by selector
+    const qs = (s, r = document) => r.querySelector(s);
+    const qsa = (s, r = document) => Array.from(r.querySelectorAll(s));
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const lightbox = qs('.lightbox');
+      const lightboxImg = qs('.lightbox-img');
+      const closeBtn = qs('.close-btn');
+
+      // Open on click
+      qsa('.item').forEach(card => {
+        card.addEventListener('click', () => {
+          const src = card.getAttribute('data-full') || qs('img', card).src;
+          lightboxImg.src = src;
+          lightbox.classList.add('open');
+        });
+      });
+
+      // Close interactions
+      const closeLightbox = () => lightbox.classList.remove('open');
+      closeBtn.addEventListener('click', closeLightbox);
+      lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+      window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+    });
+  </script>
+  <noscript>
+    <style>
+      .item { cursor: default; }
+      .item::after { display: none; }
+    </style>
+  </noscript>
+  <meta name="color-scheme" content="dark light" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <header>
+    <h1>Posters Gallery</h1>
+    <div class="subtext">Tap any poster to view in full size</div>
+  </header>
+
+  <main class="gallery">
+    <!-- Dedicated poster images first -->
+    <div class="item" data-full="/static/poster.png"><img src="/static/poster.png" alt="Poster" loading="lazy" /></div>
+    <div class="item" data-full="/static/poster1.jpg"><img src="/static/poster1.jpg" alt="Poster 1" loading="lazy" /></div>
+    <div class="item" data-full="/static/quiz_poster.jpg"><img src="/static/quiz_poster.jpg" alt="Quiz Poster" loading="lazy" /></div>
+
+    <!-- Other available images -->
+    <div class="item" data-full="/static/BATTLEGROUND.jpg"><img src="/static/BATTLEGROUND.jpg" alt="Battleground" loading="lazy" /></div>
+    <div class="item" data-full="/static/coding.jpg"><img src="/static/coding.jpg" alt="Coding" loading="lazy" /></div>
+    <div class="item" data-full="/static/college_logo.jpg"><img src="/static/college_logo.jpg" alt="College Logo" loading="lazy" /></div>
+    <div class="item" data-full="/static/college_logo-removebg-preview.png"><img src="/static/college_logo-removebg-preview.png" alt="College Logo Transparent" loading="lazy" /></div>
+    <div class="item" data-full="/static/computer.jpeg"><img src="/static/computer.jpeg" alt="Computer" loading="lazy" /></div>
+    <div class="item" data-full="/static/dance.jpg"><img src="/static/dance.jpg" alt="Dance" loading="lazy" /></div>
+    <div class="item" data-full="/static/game.png"><img src="/static/game.png" alt="Game" loading="lazy" /></div>
+    <div class="item" data-full="/static/game1.jpg"><img src="/static/game1.jpg" alt="Game 1" loading="lazy" /></div>
+    <div class="item" data-full="/static/it.jpg"><img src="/static/it.jpg" alt="IT" loading="lazy" /></div>
+    <div class="item" data-full="/static/key.jpg"><img src="/static/key.jpg" alt="Key" loading="lazy" /></div>
+    <div class="item" data-full="/static/keybaord.png"><img src="/static/keybaord.png" alt="Keyboard" loading="lazy" /></div>
+    <div class="item" data-full="/static/logo.png"><img src="/static/logo.png" alt="Logo" loading="lazy" /></div>
+    <div class="item" data-full="/static/model.jpg"><img src="/static/model.jpg" alt="Model" loading="lazy" /></div>
+    <div class="item" data-full="/static/OIP1.webp"><img src="/static/OIP1.webp" alt="OIP" loading="lazy" /></div>
+    <div class="item" data-full="/static/photo.jpg"><img src="/static/photo.jpg" alt="Photo" loading="lazy" /></div>
+    <div class="item" data-full="/static/pic.jpg"><img src="/static/pic.jpg" alt="Pic" loading="lazy" /></div>
+    <div class="item" data-full="/static/quiz.jpg"><img src="/static/quiz.jpg" alt="Quiz" loading="lazy" /></div>
+    <div class="item" data-full="/static/R.jpg"><img src="/static/R.jpg" alt="R" loading="lazy" /></div>
+    <div class="item" data-full="/static/sing.jpg"><img src="/static/sing.jpg" alt="Sing" loading="lazy" /></div>
+    <div class="item" data-full="/static/tech.jpg"><img src="/static/tech.jpg" alt="Tech" loading="lazy" /></div>
+    <div class="item" data-full="/static/video.jpg"><img src="/static/video.jpg" alt="Video" loading="lazy" /></div>
+    <div class="item" data-full="/static/WhatsApp%20Image%202025-08-18%20at%2022.23.03_7670bb01.jpg"><img src="/static/WhatsApp%20Image%202025-08-18%20at%2022.23.03_7670bb01.jpg" alt="WhatsApp Image 1" loading="lazy" /></div>
+    <div class="item" data-full="/static/WhatsApp_Image_2025-08-18_at_23.48.10_07ffd5f1-removebg-preview.png"><img src="/static/WhatsApp_Image_2025-08-18_at_23.48.10_07ffd5f1-removebg-preview.png" alt="WhatsApp Image 2" loading="lazy" /></div>
+  </main>
+
+  <div class="lightbox" aria-hidden="true">
+    <div class="lightbox-content">
+      <img class="lightbox-img" src="" alt="Full view" />
+      <button class="close-btn" aria-label="Close">Close ✕</button>
+    </div>
+  </div>
+</body>
+</html>
+
