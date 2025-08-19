@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Unique Event Cards</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>✨ Events ✨</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background: #011a10; /* Dark background */
+      background: #011a10;
       color: white;
     }
 
@@ -30,15 +30,18 @@
       border: 3px solid #00ff99;
       border-radius: 20px;
       text-align: center;
-      padding: 15px;
       position: relative;
       overflow: hidden;
       box-shadow: 0 0 15px rgba(0, 255, 153, 0.5);
       clip-path: polygon(
         15px 0, calc(100% - 15px) 0, 100% 15px, 100% calc(100% - 15px),
         calc(100% - 15px) 100%, 15px 100%, 0 calc(100% - 15px), 0 15px
-      ); /* cut-corner shape */
+      );
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .event-card:hover {
@@ -46,12 +49,25 @@
       box-shadow: 0 0 30px rgba(0, 255, 153, 0.8);
     }
 
-    .event-card img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      border-radius: 12px;
-      margin-bottom: 10px;
+    .bg-blur {
+      background-size: cover;
+      background-position: center;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(3px);
+      border-radius: 20px;
+      z-index: 1;
+    }
+
+    .content {
+      position: relative;
+      z-index: 2;
+      padding: 20px;
     }
 
     .event-title {
@@ -86,16 +102,11 @@
       background: #00cc77;
     }
 
-    /* ✅ Force 2 cards per row on mobile */
     @media (max-width: 768px) {
       .events-container {
         grid-template-columns: repeat(2, 1fr);
         gap: 15px;
         padding: 15px;
-      }
-
-      .event-card {
-        padding: 10px;
       }
 
       .event-title {
@@ -112,142 +123,162 @@
         font-size: 13px;
       }
     }
-
-    /* Removed 1 card per row on very small screens */
   </style>
 </head>
 <body>
 
-  <h1>✨ Upcoming Events ✨</h1>
+  <h1>✨ Events ✨</h1>
 
   <div class="events-container">
-    <!-- 14 Event Cards -->
-    <div class="event-card" style="background-image: url('key1.jpg'); background-size: cover; background-position: center;">
-     
-      <div class="event-title">Vegha mala</div>
-    
-      <div class="event-details" style="color:red;">👥 vaishnavi,darshan</div>
-      <div class="event-details">📍 LAB</div>
-      <a href="/event1" class="register-btn">View</a>
+    <!-- Repeat this block for each event -->
+    <!-- Example: Event 1 -->
+    <div class="event-card bg-blur" style="background-image: url('/static/key.jpg');">
+      <div class="overlay"></div>
+      <div class="content">
+        <div class="event-title">Vega Varna</div>
+        <div class="event-details">👥 Vaishnavi | Darshan</div>
+        <div class="event-details">📍 LAB</div>
+        <a href="/event1" class="register-btn">View</a>
+      </div>
     </div>
 
-    <div class="event-card">
-      <img src="https://via.placeholder.com/400x200.png?text=Event+2" alt="Event 2">
-      <div class="event-title">Event 2</div>
-      <div class="event-details">📅 Date & Time</div>
-      <div class="event-details">👥 Team Info</div>
-      <div class="event-details">📍 Location</div>
-      <a href="/event1" class="register-btn">View</a>
+    <!-- Event 2 to 14 -->
+    <!-- Just change the image path, title, team, location, and link -->
+    <!-- Here's a quick template for the rest -->
+
+    <!-- Event 2 -->
+    <div class="event-card bg-blur" style="background-image: url('/static/coding.jpg');">
+      <div class="overlay"></div>
+      <div class="content">
+        <div class="event-title">C-questers</div>
+        <div class="event-details">👥 Team Beta</div>
+        <div class="event-details">📍 Hall A</div>
+        <a href="/event2" class="register-btn">View</a>
+      </div>
     </div>
 
-    <div class="event-card">
-      <img src="https://via.placeholder.com/400x200.png?text=Event+3" alt="Event 3">
-      <div class="event-title">Event 3</div>
-      <div class="event-details">📅 Date & Time</div>
-      <div class="event-details">👥 Team Info</div>
-      <div class="event-details">📍 Location</div>
-      <a href="/event1" class="register-btn">View</a>
+    <!-- Event 3 -->
+    <div class="event-card bg-blur" style="background-image: url('/static/dance.jpg');">
+      <div class="overlay"></div>
+      <div class="content">
+        <div class="event-title">Group Dance</div>
+        <div class="event-details">👥 Team Gamma</div>
+        <div class="event-details">📍 Room 101</div>
+        <a href="/event3" class="register-btn">View</a>
+      </div>
     </div>
 
-    <div class="event-card">
-      <img src="https://via.placeholder.com/400x200.png?text=Event+4" alt="Event 4">
-      <div class="event-title">Event 4</div>
-      <div class="event-details">📅 Date & Time</div>
-      <div class="event-details">👥 Team Info</div>
-      <div class="event-details">📍 Location</div>
-      <a href="/event1" class="register-btn">View</a>
+    <div class="event-card bg-blur" style="background-image: url('/static/R.jpg');">
+      <div class="overlay"></div>
+      <div class="content">
+        <div class="event-title">Treasure Hunt</div>
+        <div class="event-details">👥 Team Gamma</div>
+        <div class="event-details">📍 Room 101</div>
+        <a href="/event4" class="register-btn">View</a>
+      </div>
     </div>
 
-    <div class="event-card">
-      <img src="https://via.placeholder.com/400x200.png?text=Event+5" alt="Event 5">
-      <div class="event-title">Event 5</div>
-      <div class="event-details">📅 Date & Time</div>
-      <div class="event-details">👥 Team Info</div>
-      <div class="event-details">📍 Location</div>
-      <a href="/event1" class="register-btn">View</a>
+    <div class="event-card bg-blur" style="background-image: url('/static/it.jpg');">
+      <div class="overlay"></div>
+      <div class="content">
+        <div class="event-title">Best IT Manager</div>
+        <div class="event-details">👥 Team Gamma</div>
+        <div class="event-details">📍 Room 101</div>
+        <a href="/event5" class="register-btn">View</a>
+      </div>
     </div>
 
-    <div class="event-card">
-      <img src="https://via.placeholder.com/400x200.png?text=Event+6" alt="Event 6">
-      <div class="event-title">Event 6</div>
-      <div class="event-details">📅 Date & Time</div>
-      <div class="event-details">👥 Team Info</div>
-      <div class="event-details">📍 Location</div>
-      <a href="/event1" class="register-btn">View</a>
+    <div class="event-card bg-blur" style="background-image: url('/static/video.jpg');">
+      <div class="overlay"></div>
+      <div class="content">
+        <div class="event-title">Videography</div>
+        <div class="event-details">👥 Team Gamma</div>
+        <div class="event-details">📍 Room 101</div>
+        <a href="/event6" class="register-btn">View</a>
+      </div>
     </div>
 
-    <div class="event-card">
-      <img src="https://via.placeholder.com/400x200.png?text=Event+7" alt="Event 7">
-      <div class="event-title">Event 7</div>
-      <div class="event-details">📅 Date & Time</div>
-      <div class="event-details">👥 Team Info</div>
-      <div class="event-details">📍 Location</div>
-      <a href="/event1" class="register-btn">View</a>
+    <div class="event-card bg-blur" style="background-image: url('/static/photo.jpg');">
+      <div class="overlay"></div>
+      <div class="content">
+        <div class="event-title">Photography</div>
+        <div class="event-details">👥 Team Gamma</div>
+        <div class="event-details">📍 Room 101</div>
+        <a href="/event7" class="register-btn">View</a>
+      </div>
     </div>
 
-    <div class="event-card">
-      <img src="https://via.placeholder.com/400x200.png?text=Event+8" alt="Event 8">
-      <div class="event-title">Event 8</div>
-      <div class="event-details">📅 Date & Time</div>
-      <div class="event-details">👥 Team Info</div>
-      <div class="event-details">📍 Location</div>
-      <a href="/event1" class="register-btn">View</a>
+    <div class="event-card bg-blur" style="background-image: url('/static/game1.jpg');">
+      <div class="overlay"></div>
+      <div class="content">
+        <div class="event-title">Gaming</div>
+        <div class="event-details">👥 Team Gamma</div>
+        <div class="event-details">📍 Room 101</div>
+        <a href="/event8" class="register-btn">View</a>
+      </div>
     </div>
 
-    <div class="event-card">
-      <img src="https://via.placeholder.com/400x200.png?text=Event+9" alt="Event 9">
-      <div class="event-title">Event 9</div>
-      <div class="event-details">📅 Date & Time</div>
-      <div class="event-details">👥 Team Info</div>
-      <div class="event-details">📍 Location</div>
-      <a href="/event1" class="register-btn">View</a>
+    <div class="event-card bg-blur" style="background-image: url('/static/poster1.jpg');">
+      <div class="overlay"></div>
+      <div class="content">
+        <div class="event-title">Poster Making</div>
+        <div class="event-details">👥 Team Gamma</div>
+        <div class="event-details">📍 Room 101</div>
+        <a href="/event9" class="register-btn">View</a>
+      </div>
     </div>
 
-    <div class="event-card">
-      <img src="https://via.placeholder.com/400x200.png?text=Event+10" alt="Event 10">
-      <div class="event-title">Event 10</div>
-      <div class="event-details">📅 Date & Time</div>
-      <div class="event-details">👥 Team Info</div>
-      <div class="event-details">📍 Location</div>
-      <a href="/event1" class="register-btn">View</a>
+    <div class="event-card bg-blur" style="background-image: url('/static/event10.jpg');">
+      <div class="overlay"></div>
+      <div class="content">
+        <div class="event-title">Ungoogle</div>
+        <div class="event-details">👥 Team Gamma</div>
+        <div class="event-details">📍 Room 101</div>
+        <a href="/event10" class="register-btn">View</a>
+      </div>
     </div>
 
-    <div class="event-card">
-      <img src="https://via.placeholder.com/400x200.png?text=Event+11" alt="Event 11">
-      <div class="event-title">Event 11</div>
-      <div class="event-details">📅 Date & Time</div>
-      <div class="event-details">👥 Team Info</div>
-      <div class="event-details">📍 Location</div>
-      <a href="/event1" class="register-btn">View</a>
+    <div class="event-card bg-blur" style="background-image: url('/static/quiz.jpg');">
+      <div class="overlay"></div>
+      <div class="content">
+        <div class="event-title">Quiz</div>
+        <div class="event-details">👥 Team Gamma</div>
+        <div class="event-details">📍 Room 101</div>
+        <a href="/event11" class="register-btn">View</a>
+      </div>
     </div>
 
-    <div class="event-card">
-      <img src="https://via.placeholder.com/400x200.png?text=Event+12" alt="Event 12">
-      <div class="event-title">Event 12</div>
-      <div class="event-details">📅 Date & Time</div>
-      <div class="event-details">👥 Team Info</div>
-      <div class="event-details">📍 Location</div>
-      <a href="/event1" class="register-btn">View</a>
+    <div class="event-card bg-blur" style="background-image: url('/static/event12.jpg');">
+      <div class="overlay"></div>
+      <div class="content">
+        <div class="event-title">IT Model</div>
+        <div class="event-details">👥 Team Gamma</div>
+        <div class="event-details">📍 Room 101</div>
+        <a href="/event12" class="register-btn">View</a>
+      </div>
     </div>
 
-    <div class="event-card">
-      <img src="https://via.placeholder.com/400x200.png?text=Event+13" alt="Event 13">
-      <div class="event-title">Event 13</div>
-      <div class="event-details">📅 Date & Time</div>
-      <div class="event-details">👥 Team Info</div>
-      <div class="event-details">📍 Location</div>
-      <a href="/event1" class="register-btn">View</a>
+    <div class="event-card bg-blur" style="background-image: url('/static/sing.jpg');">
+      <div class="overlay"></div>
+      <div class="content">
+        <div class="event-title">IT Melody</div>
+        <div class="event-details">👥 Team Gamma</div>
+        <div class="event-details">📍 Room 101</div>
+        <a href="/event13" class="register-btn">View</a>
+      </div>
     </div>
 
-    <div class="event-card">
-      <img src="https://via.placeholder.com/400x200.png?text=Event+14" alt="Event 14">
-      <div class="event-title">Event 14</div>
-      <div class="event-details">📅 Date & Time</div>
-      <div class="event-details">👥 Team Info</div>
-      <div class="event-details">📍 Location</div>
-      <a href="/event1" class="register-btn">View</a>
-    </div>
 
+    <!-- Example: Event 14 -->
+    <div class="event-card bg-blur" style="background-image: url('/static/event14.jpg');">
+      <div class="overlay"></div>
+      <div class="content">
+        <div class="event-title">Videography non cs</div>
+        <div class="event-details">👥 Team Omega</div>
+        <div class="event-details">📍 Innovation Lab</div>
+        <a href="/event14" class="register-btn">View</a>
+      </div>
+    </div>
   </div>
 
 </body>
