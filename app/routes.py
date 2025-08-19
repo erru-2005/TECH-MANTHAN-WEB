@@ -113,3 +113,8 @@ def showcase_new13():
 def showcase_new14():
     # Single-card version that replaces the first image with the second image and adds 3D + CTA
     return render_template('event14.html')
+
+@main.route('/treasure')
+def treasure():
+    # Fullscreen video with treasure box animation
+    return render_template('treasure.html')
