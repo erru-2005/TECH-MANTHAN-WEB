@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About • TECH MANTHAN 5.0</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      color: #ffffff;
+      min-height: 100vh;
+      background: linear-gradient(120deg, #0a0f1f, #111c3a, #0c2b2e);
+      background-size: 200% 200%;
+      animation: gradientShift 12s ease infinite;
+      overflow-x: hidden;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Soft gradient blobs */
+    .blob {
+      position: fixed;
+      width: 480px;
+      height: 480px;
+      filter: blur(80px);
+      z-index: 0;
+      pointer-events: none;
+    }
+    .blob.one { top: -120px; left: -120px; background: radial-gradient(circle at 30% 30%, rgba(0,255,204,0.35), rgba(0,0,0,0)); }
+    .blob.two { bottom: -140px; right: -140px; background: radial-gradient(circle at 70% 70%, rgba(0,140,255,0.35), rgba(0,0,0,0)); }
+
+    /* Navbar */
+    nav {
+      position: sticky;
+      top: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 20px;
+      background: rgba(3, 8, 20, 0.55);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      z-index: 10;
+    }
+    .brand {
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+    nav a {
+      color: #e9f9ff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      opacity: 0.9;
+    }
+    nav a:hover { opacity: 1; }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 24px;
+      padding: 40px 20px 10px;
+      align-items: center;
+      z-index: 1;
+    }
+    .hero .left h1 {
+      font-size: 40px;
+      line-height: 1.2;
+      margin-bottom: 10px;
+      text-shadow: 0 10px 30px rgba(0,0,0,0.45);
+    }
+    .hero .left p {
+      opacity: 0.9;
+      max-width: 720px;
+    }
+    .cta-row { margin-top: 16px; display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn {
+      background: linear-gradient(90deg, #00ffc6, #008cff);
+      color: #001327;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-weight: 800;
+      text-decoration: none;
+      font-size: 14px;
+      box-shadow: 0 8px 24px rgba(0, 255, 198, 0.25);
+    }
+    .btn.secondary {
+      background: transparent;
+      color: #c9eeff;
+      border: 1px solid rgba(255,255,255,0.25);
+      box-shadow: none;
+    }
+
+    /* Three.js canvas container */
+    .three-wrap {
+      width: 100%;
+      aspect-ratio: 16/10;
+      border-radius: 16px;
+      overflow: hidden;
+      background: rgba(0,0,0,0.25);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    /* Events list */
+    .events {
+      position: relative;
+      z-index: 1;
+      margin: 24px 0 40px;
+      padding: 0 20px 10px;
+    }
+    .events h2 { font-size: 26px; margin-bottom: 10px; }
+    .view-toggle { display: inline-flex; border: 1px solid rgba(255,255,255,0.15); border-radius: 10px; overflow: hidden; margin-bottom: 14px; }
+    .view-toggle button { background: rgba(255,255,255,0.06); color: #e8fbff; border: none; padding: 8px 12px; font-weight: 700; font-size: 12px; cursor: pointer; }
+    .view-toggle button.active { background: linear-gradient(90deg,#00ffc6,#008cff); color: #001327; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 14px;
+    }
+    .card {
+      background: rgba(5, 20, 32, 0.65);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 12px;
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.25); }
+    .card a { color: #9ee7ff; text-decoration: none; font-weight: 700; }
+
+    /* Unordered list style for events */
+    .events-list { padding-left: 24px; margin-top: 6px; }
+    .events-list li { margin: 8px 0; }
+    .events-list a { color: #9ee7ff; text-decoration: none; font-weight: 800; }
+
+    /* List view */
+    .list { display: none; margin-top: 6px; }
+    .list-item { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 14px; border-radius: 12px; background: rgba(5,20,32,0.65); border: 1px solid rgba(255,255,255,0.08); }
+    .list-item + .list-item { margin-top: 10px; }
+    .list-title { display: flex; align-items: center; gap: 10px; font-weight: 800; }
+    .badge-num { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; font-weight: 900; color: #001327; background: linear-gradient(90deg,#00ffc6,#008cff); }
+    .list a { color: #9ee7ff; text-decoration: none; font-weight: 800; font-size: 13px; }
+
+    /* View state */
+    .events.grid-view .grid { display: grid; }
+    .events.grid-view .list { display: none; }
+    .events.list-view .grid { display: none; }
+    .events.list-view .list { display: block; }
+
+    /* Footer */
+    footer { padding: 20px; text-align: center; opacity: 0.8; }
+
+    /* Mobile */
+    @media (max-width: 920px) {
+      .hero { grid-template-columns: 1fr; }
+      .three-wrap { aspect-ratio: 16/12; }
+      .hero .left h1 { font-size: 32px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="blob one"></div>
+  <div class="blob two"></div>
+
+  <nav>
+    <div class="brand">TECH MANTHAN 5.0</div>
+    <div class="nav-links">
+      <a href="{{ url_for('main.index') }}">Home</a>
+      <a href="{{ url_for('main.All_Event') }}">Events</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="left">
+      <h1>About TECH MANTHAN 5.0</h1>
+      <p>
+        A celebration of innovation, code, and creativity. Explore our events, meet fellow builders,
+        and experience an immersive 3D vibe. The hero on the right is a live Three.js scene using your
+        promo artwork as a floating 3D card with subtle parallax and particles.
+      </p>
+      <div class="cta-row">
+        <a class="btn" href="{{ url_for('main.All_Event') }}">Browse Events</a>
+        <a class="btn secondary" href="{{ url_for('main.index') }}">Back to Home</a>
+      </div>
+    </div>
+ 
+  </section>
+
+  <section class="events">
+    <h2>TECH MANTHAN 5.0 – Event Highlights</h2>
+    
+    <div class="grid">
+      <div class="card"><a href="{{ url_for('main.showcase_new1') }}">Best IT Manager</a></div>
+      <div class="card"><a href="{{ url_for('main.showcase_new2') }}">Videography</a></div>
+      <div class="card"><a href="{{ url_for('main.showcase_new3') }}">Treasure Hunt</a></div>
+      <div class="card"><a href="{{ url_for('main.showcase_new4') }}">Coding</a></div>
+      <div class="card"><a href="{{ url_for('main.showcase_new5') }}">Photography</a></div>
+      <div class="card"><a href="{{ url_for('main.showcase_new6') }}">Gaming</a></div>
+      <div class="card"><a href="{{ url_for('main.showcase_new7') }}">Poster Making</a></div>
+      <div class="card"><a href="{{ url_for('main.showcase_new8') }}">Speed Typing</a></div>
+      <div class="card"><a href="{{ url_for('main.showcase_new9') }}">Ungoogle</a></div>
+      <div class="card"><a href="{{ url_for('main.showcase_new10') }}">Quiz</a></div>
+      <div class="card"><a href="{{ url_for('main.showcase_new11') }}">Group Dance</a></div>
+      <div class="card"><a href="{{ url_for('main.showcase_new12') }}">IT Model & Marketing with PPT</a></div>
+      <div class="card"><a href="{{ url_for('main.showcase_new13') }}">IT Melody</a></div>
+      <div class="card"><a href="{{ url_for('main.showcase_new14') }}">Videography (Non‑CS)</a></div>
+    </div>
+   
+  </section>
+
+  <footer>
+    © {{ 2025 }} TECH MANTHAN • Built with love 🤍 and gradients of Innovation
+  </footer>
+
+  <script>
+    // Events view toggle (grid/list)
+    const eventsSection = document.querySelector('.events');
+    const toggle = document.getElementById('viewToggle');
+    if (eventsSection && toggle) {
+      eventsSection.classList.add('grid-view');
+      toggle.addEventListener('click', (e) => {
+        const btn = e.target.closest('button');
+        if (!btn) return;
+        const view = btn.dataset.view;
+        toggle.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        if (view === 'list') {
+          eventsSection.classList.remove('grid-view');
+          eventsSection.classList.add('list-view');
+        } else {
+          eventsSection.classList.remove('list-view');
+          eventsSection.classList.add('grid-view');
+        }
+      });
+    }
+  </script>
+
+  <!-- Three.js -->
+  <script src="https://unpkg.com/three@0.159.0/build/three.min.js"></script>
+  <script>
+    // Basic Three.js scene with a textured floating plane and particles
+    const container = document.getElementById('three-wrap');
+    const scene = new THREE.Scene();
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    container.appendChild(renderer.domElement);
+
+    const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 100);
+    camera.position.set(0, 0, 3.5);
+
+    // Light
+    const light = new THREE.PointLight(0xffffff, 1.2);
+    light.position.set(2, 3, 4);
+    scene.add(light);
+
+    // 3D card using your promo image
+    const textureLoader = new THREE.TextureLoader();
+    const promoTexture = textureLoader.load("{{ url_for('static', filename='computer.jpeg') }}");
+    const cardGeometry = new THREE.PlaneGeometry(2.4, 1.4, 16, 10);
+    const cardMaterial = new THREE.MeshStandardMaterial({ map: promoTexture, roughness: 0.6, metalness: 0.1 });
+    const card = new THREE.Mesh(cardGeometry, cardMaterial);
+    card.rotation.x = -0.05;
+    scene.add(card);
+
+    // Subtle curve deformation for 3D feel
+    const position = cardGeometry.attributes.position;
+    const vector = new THREE.Vector3();
+    for (let i = 0; i < position.count; i++) {
+      vector.fromBufferAttribute(position, i);
+      const bend = Math.sin((vector.x + 1.2) * 1.2) * 0.06;
+      position.setY(i, vector.y + bend);
+    }
+    position.needsUpdate = true;
+
+    // Particles field
+    const particles = new THREE.BufferGeometry();
+    const count = 400;
+    const positions = new Float32Array(count * 3);
+    for (let i = 0; i < count * 3; i += 3) {
+      positions[i] = (Math.random() - 0.5) * 8;     // x
+      positions[i + 1] = (Math.random() - 0.5) * 5; // y
+      positions[i + 2] = -1 - Math.random() * 4;    // z
+    }
+    particles.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const pMaterial = new THREE.PointsMaterial({ color: 0x66fff2, size: 0.02, transparent: true, opacity: 0.8 });
+    const points = new THREE.Points(particles, pMaterial);
+    scene.add(points);
+
+    // Resize
+    function onResize() {
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+      renderer.setSize(w, h);
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+    }
+    window.addEventListener('resize', onResize);
+
+    // Parallax & mobile tilt
+    const targetRotation = { x: -0.05, y: 0 };
+    container.addEventListener('mousemove', (e) => {
+      const rX = (e.offsetY / container.clientHeight - 0.5) * -0.6;
+      const rY = (e.offsetX / container.clientWidth - 0.5) * 0.8;
+      targetRotation.x = rX;
+      targetRotation.y = rY;
+    });
+    window.addEventListener('deviceorientation', (e) => {
+      if (e && typeof e.beta === 'number' && typeof e.gamma === 'number') {
+        targetRotation.x = (e.beta / 90) * 0.4;
+        targetRotation.y = (e.gamma / 90) * 0.5;
+      }
+    });
+
+    // Animate
+    const clock = new THREE.Clock();
+    function animate() {
+      const t = clock.getElapsedTime();
+      points.rotation.y = t * 0.04;
+      card.rotation.x += (targetRotation.x - card.rotation.x) * 0.06;
+      card.rotation.y += (targetRotation.y - card.rotation.y) * 0.06;
+      renderer.render(scene, camera);
+      requestAnimationFrame(animate);
+    }
+    animate();
+  </script>
+</body>
+</html>
+
+
