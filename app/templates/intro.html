@@ -11,43 +11,52 @@
       --tm-gradient: linear-gradient(90deg, #a64dff 0%, #36d1ff 50%, #22ff88 100%);
     }
 
-	body {
-  margin: 0;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  font-family: 'Poppins', sans-serif;
-  text-align: center;
-  padding: 0 5vw;
-  box-sizing: border-box;
+    /* ✅ Reset to avoid unwanted scrollbars */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  /* ✅ background from static folder */
-  background: url("{{ url_for('static', filename='techy1.jpg') }}") no-repeat center center/cover;
-  position: relative;
-}
+    html, body {
+      height: 100%;
+      width: 100%;
+      overflow: hidden; /* prevent scrollbars */
+    }
 
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+      background: url("{{ url_for('static', filename='techy1.jpg') }}") no-repeat center center/cover;
+      position: relative;
+    }
 
     /* dark overlay */
     body::before {
       content: "";
       position: absolute;
       inset: 0;
-      background: rgba(0, 0, 0, 0.55); /* dim for readability */
+      background: rgba(0, 0, 0, 0.55);
       z-index: 0;
     }
 
     .splash, .version, .tagline, .skip {
       position: relative;
-      z-index: 1; /* keep text above overlay */
+      z-index: 1;
     }
 
     .splash {
-      white-space: nowrap; 
-      max-width: 95vw;     
-      padding: 0 2vw;      
-      letter-spacing: 2px; 
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.1em;
+      letter-spacing: 2px;
+      max-width: 95%;
+      text-align: center;
     }
 
     .splash::after {
@@ -63,7 +72,7 @@
       display: inline-block;
       font-family: 'Orbitron', sans-serif;
       font-weight: 800;
-      font-size: clamp(1.8rem, 8vw, 3.8rem);
+      font-size: clamp(1.8rem, 8vw, 4rem);
       background: var(--tm-gradient);
       -webkit-background-clip: text;
       background-clip: text;
@@ -99,9 +108,9 @@
     }
 
     .version {
-      margin-top: .3em;
+      margin-top: 0.4em;
       font-weight: 800;
-      font-size: clamp(1.4rem, 5vw, 2.5rem);
+      font-size: clamp(1.2rem, 5vw, 2.5rem);
       background: var(--tm-gradient);
       -webkit-background-clip: text;
       background-clip: text;
@@ -112,13 +121,14 @@
     }
 
     .tagline {
-      margin-top: .4em;
-      font-size: clamp(0.9rem, 3.8vw, 1.3rem);
+      margin-top: 0.4em;
+      font-size: clamp(0.9rem, 3.5vw, 1.3rem);
       font-style: italic;
       color: #ddd;
       opacity: 0;
       transform: translateY(14px);
       animation: fadeUp .7s 1.7s forwards ease-out;
+      padding: 0 1rem; /* prevent edge clipping */
     }
 
     .tagline .hl {
@@ -130,8 +140,14 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    .skip { margin-top: 1.2rem; }
-    .skip a { color: #22ff88; text-decoration: none; font-weight: 700; }
+    .skip {
+      margin-top: 1.2rem;
+    }
+    .skip a {
+      color: #22ff88;
+      text-decoration: none;
+      font-weight: 700;
+    }
   </style>
 </head>
 <body>
@@ -152,13 +168,11 @@
   </div>
 
   <div class="version">5.0</div>
-  <div class="tagline">"Manthan <span class="hl">of</span>  Minds, Miracle <span class="hl"> of </span>Tech."</div>
-  
+  <div class="tagline">"Manthan <span class="hl">of</span> Minds, Miracle <span class="hl">of</span> Tech."</div>
 
   <script>
-    // Auto redirect to home after splash completes
-    // Wait 5 seconds on first load
-    setTimeout(function() { window.location.href = "/home"; }, 5000);
+    // Auto redirect after 5 seconds
+    setTimeout(() => { window.location.href = "/home"; }, 5000);
   </script>
 </body>
 </html>
