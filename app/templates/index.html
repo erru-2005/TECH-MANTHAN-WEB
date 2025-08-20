@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Echoes of Eternity</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Orbitron:wght@700;800&display=swap');
     * {
       margin: 0;
       padding: 0;
@@ -12,7 +13,7 @@
     }
 
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Montserrat', Arial, sans-serif;
       height: 100vh;
       display: flex;
       flex-direction: column;
@@ -21,8 +22,10 @@
       color: white;
       text-align: center;
       background: black;
+     
     }
 
+    /* Background image */
     /* Background image */
     .background {
   position: fixed;
@@ -31,10 +34,17 @@
   width: 100vw;
   height: 100vh;
   background: url("{{ url_for('static', filename='logo.png') }}") no-repeat center center;
-  background-size: contain;   /* shows the full image */
-  background-color: black;    /* fills empty space if image doesn’t fit */
+  background-size: contain;
+  background-color: black;
   z-index: -1;
+
+  /* Smooth animation */
+  transition: transform 0.3s ease-out;
+  will-change: transform; /* better performance */
+  opacity: 1; /* full strength on mobile */
 }
+
+
 
     /* Navbar */
     nav {
@@ -64,19 +74,38 @@
   flex-direction: column;
   justify-content: flex-start;  /* move to top */
   align-items: center;
-  padding: 40px 20px;  /* some spacing from top */
+  padding: 48px 20px 24px;  /* reduced spacing under navbar */
 }
 
     .logo {
+      font-family: 'Orbitron', 'Montserrat', Arial, sans-serif;
       font-size: 3rem;
-      font-weight: bold;
-      text-shadow: 2px 2px 10px black;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+      background: linear-gradient(180deg, #ffffff 0%, #e8eefc 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.55);
     }
 
     .title {
+      font-family: 'Montserrat', Arial, sans-serif;
       font-size: 2rem;
       margin: 15px 0;
-      text-shadow: 2px 2px 8px black;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.45);
+      line-height: 1.35;
+    }
+    .title .line { display: inline-block; text-shadow: 0 2px 10px rgba(0,0,0,0.35); }
+    .title .accent {
+      background: linear-gradient(90deg, #60a5fa 0%, #22d3ee 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 700;
+      letter-spacing: 0.4px;
     }
 
     .buttons {
@@ -85,6 +114,13 @@
       margin-top: 20px;
       flex-wrap: wrap;
     }
+
+    /* inline hero logo (hidden by default; shown on desktop only) */
+    .hero-logo {
+      display: none;
+    }
+
+    /* desktop-only stack (removed in revert) */
 
     .btn {
       background: green;
@@ -114,6 +150,30 @@
       color: gold;
     }
 
+    /* Desktop wide screens: prevent overlap */
+    @media (min-width: 992px) {
+      .center { padding-top: 56px; }
+      .logo   { font-size: 3.2rem; }
+      .title  { font-size: 2.1rem; }
+      .background { opacity: 0; } /* hide huge background logo */
+      .hero-logo {
+        display: block;
+        width: 380px;           /* enlarged */
+        max-width: 32vw;        /* slightly larger max */
+        height: auto;
+        margin-top: 14px;
+        filter: drop-shadow(0 4px 18px rgba(0,0,0,0.6));
+        will-change: transform;
+        transition: transform 0.25s ease-out;
+      }
+      .explore-btn {
+        display: flex;
+        justify-content: center;
+        position: relative;
+        bottom: 36px;           /* lift button so it doesn't get cut off */
+      }
+    }
+
     /* Mobile responsive */
     @media (max-width: 768px) {
       nav {
@@ -136,12 +196,33 @@
         text-align: center;
         gap: 10px;
       }
+      .center {
+        padding-top: calc(72px + env(safe-area-inset-top, 0px)); /* push text down on mobile/iOS */
+      }
+      .background {
+        top: calc(env(safe-area-inset-top, 0px) + 24px); /* slightly higher to center better */
+      }
       .explore-btn {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;  /* space above footer */
-}
+        display: flex;
+        justify-content: center;
+        position: fixed;                 /* keep visible on iOS */
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: calc(env(safe-area-inset-bottom, 0px) + 20px);
+        z-index: 30;
+        width: auto;
+      }
 
+
+    }
+
+    /* Extra iOS Safari guard */
+    @supports (-webkit-touch-callout: none) {
+      @media (max-width: 820px) {
+        .center { padding-top: calc(84px + env(safe-area-inset-top, 0px)); }
+        .background { top: calc(env(safe-area-inset-top, 0px) + 32px); }
+        .explore-btn { bottom: calc(env(safe-area-inset-bottom, 0px) + 20px); }
+      }
     }
   </style>
 </head>
@@ -151,10 +232,10 @@
 
   <!-- Navbar -->
   <nav>
-    <a href="/">Home</a>
+    <a href="/home">Home</a>
     
     <a href="all_event">Events</a>
-    <a href="#">Gallery</a>
+    <a href="gallary">Gallery</a>
     <a href="about">About</a>
   </nav>
 
@@ -162,9 +243,10 @@
   <!-- Center content -->
 <div class="center">
   <div class="logo">TECH MANTHAN</div>
-  <div class="title">Divided By Zero United By One</div>
+  <div class="title"><span class="line">Divided By <span class="accent">Zero</span></span><br/><span class="line">United By <span class="accent">One</span></span></div>
+  <img class="hero-logo" src="{{ url_for('static', filename='logo.png') }}" alt="Tech Manthan logo" />
 </div>
-
+ 
 <!-- Explore button at bottom -->
 <div class="explore-btn">
   <a href="/explore" class="btn">Explore</a>
@@ -173,23 +255,59 @@
   <!-- Footer -->
   
   <script>
-    // Desktop mouse move effect
+    let targetX = 0, targetY = 0;
+    let currentX = 0, currentY = 0;
+    const bg = document.querySelector('.background');
+    const heroLogo = document.querySelector('.hero-logo');
+  
+    // Desktop mouse move
     document.addEventListener('mousemove', (e) => {
-      let x = (e.clientX / window.innerWidth - 0.5) * 25;
-      let y = (e.clientY / window.innerHeight - 0.5) * 25;
-      document.querySelector('.background').style.transform = `translate(${x}px, ${y}px) scale(1.05)`;
+      targetX = (e.clientX / window.innerWidth - 0.5) * 25;
+      targetY = (e.clientY / window.innerHeight - 0.5) * 25;
     });
-
-    document.addEventListener('mouseleave', () => {
-      document.querySelector('.background').style.transform = 'translate(0,0) scale(1.05)';
-    });
-
-    // Mobile tilt effect
-    window.addEventListener('deviceorientation', (e) => {
+  
+    // Mobile tilt (needs permission on iOS)
+    function enableTilt() {
+      if (typeof DeviceOrientationEvent !== "undefined" &&
+          typeof DeviceOrientationEvent.requestPermission === "function") {
+        // iOS needs user gesture
+        DeviceOrientationEvent.requestPermission().then(response => {
+          if (response === "granted") {
+            window.addEventListener("deviceorientation", handleOrientation);
+          }
+        }).catch(console.error);
+      } else {
+        // Android / browsers that don’t need permission
+        window.addEventListener("deviceorientation", handleOrientation);
+      }
+    }
+  
+    function handleOrientation(e) {
       let x = (e.gamma || 0) / 3; // left-right tilt
       let y = (e.beta || 0) / 3;  // up-down tilt
-      document.querySelector('.background').style.transform = `translate(${x}px, ${y}px) scale(1.05)`;
-    });
+      targetX = x;
+      targetY = y;
+    }
+  
+    // Smooth animation loop
+    function animate() {
+      const isMobile = window.innerWidth <= 768;
+      const baseScale = isMobile ? 0.95 : 1.05; // slightly smaller on mobile to avoid overlap
+      const downShift = isMobile ? 8 : 0;      // smaller nudge so it sits higher
+      currentX += (targetX - currentX) * 0.05;
+      currentY += (targetY - currentY) * 0.05;
+      bg.style.transform = `translate(${currentX}px, ${currentY + downShift}px) scale(${baseScale})`;
+      if (heroLogo) {
+        heroLogo.style.transform = `translate(${currentX * 0.6}px, ${currentY * 0.6}px) scale(1.03)`;
+      }
+      requestAnimationFrame(animate);
+    }
+    animate();
+  
+    // Enable mobile tilt after first touch (for iOS)
+    document.body.addEventListener("click", enableTilt, { once: true });
   </script>
+  
+
 </body>
 </html>

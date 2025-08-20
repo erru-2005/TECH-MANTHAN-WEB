@@ -29,7 +29,6 @@
       background: #022d18;
       border: 3px solid #00ff99;
       border-radius: 20px;
-      text-align: center;
       position: relative;
       overflow: hidden;
       box-shadow: 0 0 15px rgba(0, 255, 153, 0.5);
@@ -38,10 +37,10 @@
         calc(100% - 15px) 100%, 15px 100%, 0 calc(100% - 15px), 0 15px
       );
       transition: transform 0.3s ease, box-shadow 0.3s ease;
-      height: 300px;
+      height: 250px;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
     }
 
     .event-card:hover {
@@ -64,61 +63,47 @@
       z-index: 1;
     }
 
-    .content {
-      position: relative;
-      z-index: 2;
-      padding: 20px;
-    }
-
     .event-title {
-      font-size: 1.5rem;
+      position: absolute;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.3rem;
       font-weight: bold;
-      margin: 8px 0;
       color: #00ffcc;
-    }
-
-    .event-details {
-      font-size: 14px;
-      background: rgba(0, 255, 153, 0.1);
-      margin: 6px 0;
-      padding: 6px;
-      border-radius: 6px;
+      z-index: 2;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 6px 12px;
+      border-radius: 10px;
     }
 
     .event-link {
       text-decoration: none;
       color: inherit;
       display: block;
-      width: 100%;
-      height: 100%;
     }
 
     .event-link:hover {
       text-decoration: none;
     }
 
-    /* Tablet view (2 cards per row) */
+    /* Tablet view */
     @media (max-width: 1024px) {
       .events-container {
         grid-template-columns: repeat(2, 1fr);
       }
     }
 
-    /* Mobile view (1 card per row) */
+    /* Mobile view */
     @media (max-width: 768px) {
       .events-container {
         grid-template-columns: 1fr;
         gap: 15px;
         padding: 15px;
       }
-
       .event-title {
-        font-size: 1.2rem;
-      }
-
-      .event-details {
-        font-size: 12px;
-        padding: 4px;
+        font-size: 1rem;
+        padding: 4px 8px;
       }
     }
   </style>
@@ -130,13 +115,9 @@
   <div class="events-container">
     <!-- Event 1 -->
     <a href="/event9" class="event-link">
-      <div class="event-card bg-blur" style="background-image: url('/static/key.jpg');">
+      <div class="event-card bg-blur" style="background-image: url('/static/key');">
         <div class="overlay"></div>
-        <div class="content">
-          <div class="event-title">Vega Varna</div>
-          <div class="event-details">👥 Vaishnavi | Darshan</div>
-          <div class="event-details">📍 LAB</div>
-        </div>
+        <div class="event-title">Vega Varna</div>
       </div>
     </a>
 
@@ -144,11 +125,7 @@
     <a href="/event4" class="event-link">
       <div class="event-card bg-blur" style="background-image: url('/static/coding.jpg');">
         <div class="overlay"></div>
-        <div class="content">
-          <div class="event-title">C-questers</div>
-          <div class="event-details">👥 Team Beta</div>
-          <div class="event-details">📍 Hall A</div>
-        </div>
+        <div class="event-title">C-questers</div>
       </div>
     </a>
 
@@ -156,11 +133,7 @@
     <a href="/event11" class="event-link">
       <div class="event-card bg-blur" style="background-image: url('/static/dance.jpg');">
         <div class="overlay"></div>
-        <div class="content">
-          <div class="event-title">Group Dance</div>
-          <div class="event-details">👥 Team Gamma</div>
-          <div class="event-details">📍 Room 101</div>
-        </div>
+        <div class="event-title">Group Dance</div>
       </div>
     </a>
 
@@ -168,11 +141,7 @@
     <a href="/event3" class="event-link">
       <div class="event-card bg-blur" style="background-image: url('/static/R.jpg');">
         <div class="overlay"></div>
-        <div class="content">
-          <div class="event-title">Treasure Hunt</div>
-          <div class="event-details">👥 Team Gamma</div>
-          <div class="event-details">📍 Room 101</div>
-        </div>
+        <div class="event-title">Treasure Hunt</div>
       </div>
     </a>
 
@@ -180,11 +149,7 @@
     <a href="/event1" class="event-link">
       <div class="event-card bg-blur" style="background-image: url('/static/it.jpg');">
         <div class="overlay"></div>
-        <div class="content">
-          <div class="event-title">Best IT Manager</div>
-          <div class="event-details">👥 Team Gamma</div>
-          <div class="event-details">📍 Room 101</div>
-        </div>
+        <div class="event-title">Best IT Manager</div>
       </div>
     </a>
 
@@ -192,11 +157,7 @@
     <a href="/event2" class="event-link">
       <div class="event-card bg-blur" style="background-image: url('/static/video.jpg');">
         <div class="overlay"></div>
-        <div class="content">
-          <div class="event-title">Videography</div>
-          <div class="event-details">👥 Team Gamma</div>
-          <div class="event-details">📍 Room 101</div>
-        </div>
+        <div class="event-title">Videography</div>
       </div>
     </a>
 
@@ -204,11 +165,7 @@
     <a href="/event5" class="event-link">
       <div class="event-card bg-blur" style="background-image: url('/static/photo.jpg');">
         <div class="overlay"></div>
-        <div class="content">
-          <div class="event-title">Photography</div>
-          <div class="event-details">👥 Team Gamma</div>
-          <div class="event-details">📍 Room 101</div>
-        </div>
+        <div class="event-title">Photography</div>
       </div>
     </a>
 
@@ -216,11 +173,7 @@
     <a href="/event6" class="event-link">
       <div class="event-card bg-blur" style="background-image: url('/static/game1.jpg');">
         <div class="overlay"></div>
-        <div class="content">
-          <div class="event-title">Gaming</div>
-          <div class="event-details">👥 Team Gamma</div>
-          <div class="event-details">📍 Room 101</div>
-        </div>
+        <div class="event-title">Gaming</div>
       </div>
     </a>
 
@@ -228,23 +181,15 @@
     <a href="/event7" class="event-link">
       <div class="event-card bg-blur" style="background-image: url('/static/poster1.jpg');">
         <div class="overlay"></div>
-        <div class="content">
-          <div class="event-title">Poster Making</div>
-          <div class="event-details">👥 Team Gamma</div>
-          <div class="event-details">📍 Room 101</div>
-        </div>
+        <div class="event-title">Poster Making</div>
       </div>
     </a>
 
     <!-- Event 10 -->
     <a href="/event8" class="event-link">
-      <div class="event-card bg-blur" style="background-image: url('/static/event10.jpg');">
+      <div class="event-card bg-blur" style="background-image: url('/static/google1.jpeg');">
         <div class="overlay"></div>
-        <div class="content">
-          <div class="event-title">Ungoogle</div>
-          <div class="event-details">👥 Team Gamma</div>
-          <div class="event-details">📍 Room 101</div>
-        </div>
+        <div class="event-title">Ungoogle</div>
       </div>
     </a>
 
@@ -252,23 +197,15 @@
     <a href="/event10" class="event-link">
       <div class="event-card bg-blur" style="background-image: url('/static/quiz.jpg');">
         <div class="overlay"></div>
-        <div class="content">
-          <div class="event-title">Quiz</div>
-          <div class="event-details">👥 Team Gamma</div>
-          <div class="event-details">📍 Room 101</div>
-        </div>
+        <div class="event-title">Quiz</div>
       </div>
     </a>
 
     <!-- Event 12 -->
     <a href="/event12" class="event-link">
-      <div class="event-card bg-blur" style="background-image: url('/static/event12.jpg');">
+      <div class="event-card bg-blur" style="background-image: url('/static/itm.jpg');">
         <div class="overlay"></div>
-        <div class="content">
-          <div class="event-title">IT Model</div>
-          <div class="event-details">👥 Team Gamma</div>
-          <div class="event-details">📍 Room 101</div>
-        </div>
+        <div class="event-title">IT Model</div>
       </div>
     </a>
 
@@ -276,11 +213,7 @@
     <a href="/event13" class="event-link">
       <div class="event-card bg-blur" style="background-image: url('/static/sing.jpg');">
         <div class="overlay"></div>
-        <div class="content">
-          <div class="event-title">IT Melody</div>
-          <div class="event-details">👥 Team Gamma</div>
-          <div class="event-details">📍 Room 101</div>
-        </div>
+        <div class="event-title">IT Melody</div>
       </div>
     </a>
 
@@ -288,11 +221,7 @@
     <a href="/event14" class="event-link">
       <div class="event-card bg-blur" style="background-image: url('/static/video.jpg');">
         <div class="overlay"></div>
-        <div class="content">
-          <div class="event-title">Videography non cs</div>
-          <div class="event-details">👥 Team Omega</div>
-          <div class="event-details">📍 Innovation Lab</div>
-        </div>
+        <div class="event-title">Videography non cs</div>
       </div>
     </a>
   </div>

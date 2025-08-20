@@ -1,12 +1,17 @@
-from flask import Blueprint, render_template, request, jsonify
+from flask import Blueprint, render_template, request, jsonify, make_response
 from . import mongo
 from bson import ObjectId
 
 main = Blueprint('main', __name__)
 
-@main.route('/')
+@main.route('/home')
 def index():
-    return render_template('index.html')
+    # Show intro once per user using a cookie
+    if request.cookies.get('tm_seen_intro') == '1':
+        return render_template('index.html')
+    resp = make_response(render_template('intro.html'))
+    resp.set_cookie('tm_seen_intro', '1', max_age=60*60*24*365, samesite='Lax')
+    return resp
 
 @main.route('/explore')
 def explore():
@@ -113,3 +118,8 @@ def showcase_new13():
 def showcase_new14():
     # Single-card version that replaces the first image with the second image and adds 3D + CTA
     return render_template('event14.html')
+
+@main.route('/')
+def intro():
+    # Explicit intro route if needed
+    return render_template('intro.html')
