@@ -148,6 +148,18 @@
       .gallery { padding: 14px 14px 26px; gap: 12px; }
       .item { border-radius: 12px; }
     }
+    .fixed-footer {
+      position: fixed;
+      left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(6px);
+      border-top: 1px solid rgba(0, 255, 153, 0.25);
+      color: #cffff0;
+      text-align: center;
+      padding: 10px 12px;
+      font-size: 0.95rem;
+      letter-spacing: 0.3px;
+    }
   </style>
   <script>
     // Small helper to get all nodes by selector
@@ -193,35 +205,9 @@
   </header>
 
   <main class="gallery">
-    <!-- Dedicated poster images first -->
-    <div class="item" data-full="/static/poster.png"><img src="/static/poster.png" alt="Poster" loading="lazy" /></div>
-    <div class="item" data-full="/static/poster1.jpg"><img src="/static/poster1.jpg" alt="Poster 1" loading="lazy" /></div>
+ 
     <div class="item" data-full="/static/quiz_poster.jpg"><img src="/static/quiz_poster.jpg" alt="Quiz Poster" loading="lazy" /></div>
 
-    <!-- Other available images -->
-    <div class="item" data-full="/static/BATTLEGROUND.jpg"><img src="/static/BATTLEGROUND.jpg" alt="Battleground" loading="lazy" /></div>
-    <div class="item" data-full="/static/coding.jpg"><img src="/static/coding.jpg" alt="Coding" loading="lazy" /></div>
-    <div class="item" data-full="/static/college_logo.jpg"><img src="/static/college_logo.jpg" alt="College Logo" loading="lazy" /></div>
-    <div class="item" data-full="/static/college_logo-removebg-preview.png"><img src="/static/college_logo-removebg-preview.png" alt="College Logo Transparent" loading="lazy" /></div>
-    <div class="item" data-full="/static/computer.jpeg"><img src="/static/computer.jpeg" alt="Computer" loading="lazy" /></div>
-    <div class="item" data-full="/static/dance.jpg"><img src="/static/dance.jpg" alt="Dance" loading="lazy" /></div>
-    <div class="item" data-full="/static/game.png"><img src="/static/game.png" alt="Game" loading="lazy" /></div>
-    <div class="item" data-full="/static/game1.jpg"><img src="/static/game1.jpg" alt="Game 1" loading="lazy" /></div>
-    <div class="item" data-full="/static/it.jpg"><img src="/static/it.jpg" alt="IT" loading="lazy" /></div>
-    <div class="item" data-full="/static/key.jpg"><img src="/static/key.jpg" alt="Key" loading="lazy" /></div>
-    <div class="item" data-full="/static/keybaord.png"><img src="/static/keybaord.png" alt="Keyboard" loading="lazy" /></div>
-    <div class="item" data-full="/static/logo.png"><img src="/static/logo.png" alt="Logo" loading="lazy" /></div>
-    <div class="item" data-full="/static/model.jpg"><img src="/static/model.jpg" alt="Model" loading="lazy" /></div>
-    <div class="item" data-full="/static/OIP1.webp"><img src="/static/OIP1.webp" alt="OIP" loading="lazy" /></div>
-    <div class="item" data-full="/static/photo.jpg"><img src="/static/photo.jpg" alt="Photo" loading="lazy" /></div>
-    <div class="item" data-full="/static/pic.jpg"><img src="/static/pic.jpg" alt="Pic" loading="lazy" /></div>
-    <div class="item" data-full="/static/quiz.jpg"><img src="/static/quiz.jpg" alt="Quiz" loading="lazy" /></div>
-    <div class="item" data-full="/static/R.jpg"><img src="/static/R.jpg" alt="R" loading="lazy" /></div>
-    <div class="item" data-full="/static/sing.jpg"><img src="/static/sing.jpg" alt="Sing" loading="lazy" /></div>
-    <div class="item" data-full="/static/tech.jpg"><img src="/static/tech.jpg" alt="Tech" loading="lazy" /></div>
-    <div class="item" data-full="/static/video.jpg"><img src="/static/video.jpg" alt="Video" loading="lazy" /></div>
-    <div class="item" data-full="/static/WhatsApp%20Image%202025-08-18%20at%2022.23.03_7670bb01.jpg"><img src="/static/WhatsApp%20Image%202025-08-18%20at%2022.23.03_7670bb01.jpg" alt="WhatsApp Image 1" loading="lazy" /></div>
-    <div class="item" data-full="/static/WhatsApp_Image_2025-08-18_at_23.48.10_07ffd5f1-removebg-preview.png"><img src="/static/WhatsApp_Image_2025-08-18_at_23.48.10_07ffd5f1-removebg-preview.png" alt="WhatsApp Image 2" loading="lazy" /></div>
   </main>
 
   <div class="lightbox" aria-hidden="true">
@@ -230,6 +216,9 @@
       <button class="close-btn" aria-label="Close">Close ✕</button>
     </div>
   </div>
+  <footer class="fixed-footer">
+    Made with <span class="heart">❤</span> by Technical Team
+  </footer>
 </body>
 </html>
 

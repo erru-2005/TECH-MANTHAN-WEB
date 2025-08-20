@@ -173,6 +173,20 @@
       .three-wrap { aspect-ratio: 16/12; }
       .hero .left h1 { font-size: 32px; }
     }
+
+    .fixed-footer { 
+      position: fixed;
+      left: 0; right: 0; bottom: 0;
+      background: rgb(0, 0, 0);
+      backdrop-filter: blur(6px);
+      border-top: 1px solid rgba(0, 255, 153, 0.25);
+      color: #f0f8f5;
+      text-align: center;
+      padding: 10px 12px;
+      font-size: 0.95rem;
+      letter-spacing: 0.3px;
+      z-index: 10;
+    }
   </style>
 </head>
 <body>
@@ -225,8 +239,8 @@
    
   </section>
 
-  <footer>
-    © {{ 2025 }} TECH MANTHAN • Built with love 🤍 and gradients of Innovation
+  <footer  class="fixed-footer">
+    Made with ❤️ by Technical Team
   </footer>
 
   <script>
