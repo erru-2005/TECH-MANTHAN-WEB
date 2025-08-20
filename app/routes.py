@@ -1,26 +1,17 @@
-from flask import Blueprint, render_template, request, jsonify
+from flask import Blueprint, render_template, request, jsonify, make_response
 from . import mongo
 from bson import ObjectId
 
 main = Blueprint('main', __name__)
 
-@main.route('/')
+@main.route('/home')
 def index():
-    return render_template('index.html')
-
-@main.route('/explore')
-def explore():
-    return render_template('explore.html')
-
-@main.route('/about')
-def about():
-    return render_template('about.html')
-
-
-
-@main.route('/all_event')
-def All_Event():
-    return render_template('all_event.html')
+    # Show intro once per user using a cookie
+    if request.cookies.get('tm_seen_intro') == '1':
+        return render_template('index.html')
+    resp = make_response(render_template('intro.html'))
+    resp.set_cookie('tm_seen_intro', '1', max_age=60*60*24*365, samesite='Lax')
+    return resp
 
 @main.route('/admin/home')
 def admin_home():
@@ -36,7 +27,9 @@ def codex_event():
     return render_template('TECH recreate.html')
 
 # Lightweight registration landing so the CTA works
-
+@main.route('/register')
+def register():
+    return render_template('register.html')
 
 @main.route('/showcase/new')
 def showcase_new():
@@ -71,6 +64,7 @@ def showcase_new5():
 
 @main.route('/event6')
 def showcase_new6():
+    
     # Single-card version that replaces the first image with the second image and adds 3D + CTA
     return render_template('event6.html')
 
@@ -113,3 +107,26 @@ def showcase_new13():
 def showcase_new14():
     # Single-card version that replaces the first image with the second image and adds 3D + CTA
     return render_template('event14.html')
+
+@main.route('/all_event')
+def all_event():
+    # Single-card version that replaces the first image with the second image and adds 3D + CTA
+    return render_template('all_event.html')
+
+# Gallery route
+@main.route('/gallary')
+def gallery():
+    return render_template('gallary.html')
+
+
+@main.route('/about')
+def about():
+    return render_template('about.html')
+
+@main.route('/explore')
+def explore():
+    return render_template('explore.html')
+@main.route('/')
+def intro():
+    # Explicit intro route if needed
+    return render_template('intro.html')
